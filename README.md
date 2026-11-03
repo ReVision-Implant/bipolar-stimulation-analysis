@@ -1,16 +1,15 @@
-# Bipolar Intracortical Microstimulation: analysis code
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23889569.svg)](https://doi.org/10.5281/zenodo.23889569)
+# Bipolar intracortical microstimulation: analysis code
 
 Analysis code for the two-photon calcium imaging experiments in:
 
 > Schelles M, Verhaege A, Van Rompaey N, Goyvaerts L, Wierda K, Ceyssens F, Kraft M, Bonin V. Bipolar intracortical microstimulation expands the repertoire of neuronal activation patterns. *Journal of Neural Engineering* (2026). https://doi.org/10.1088/1741-2552/aebb67
 
-Maarten Schelles, ReVision Implant, maarten@revision-implant.com
+The data are available on Zenodo: https://doi.org/10.5281/zenodo.23889569
 
 ## Contents
 
 - `neuron_activity_processing.py`
-  - `ExtractFluorescence`: ΔF/F trace per cell (mean over the pixels of its mask), peak response per stimulation pattern, activity threshold and cell centroid. Results are cached as `cell_data_<name>` in the data directory.
+  - `ExtractFluorescence`: ΔF/F trace per cell (mean over the pixels of its mask), peak response per stimulation pattern, activity threshold and cell centroid.
   - `ProcessFluorescence`: comparison of stimulation patterns (binary overlap, Spearman correlation, angle between current directions, PCA) and the center and extent of activity along an axis (Gaussian fit, weighted mean or kernel density estimate).
   - `get_all_electrode_locations`: positions of all return electrodes, derived from three annotated electrode positions.
   - Analysis section, executed when the file is run as a script, that produces the summary figures and statistical tests of the paper.
@@ -26,10 +25,12 @@ pip install -r requirements.txt
 
 ## Input data
 
-The imaging data are not included in this repository; see the data availability statement of the paper. For each dataset, `ExtractFluorescence` expects two files in the same directory:
+Download the data from Zenodo (https://doi.org/10.5281/zenodo.23889569); the record description explains its contents. For each dataset, `ExtractFluorescence` reads from one directory:
 
 - `<name>_stimall_seg.npy`: Cellpose segmentation (dictionary with key `masks`)
-- `<name>_dff.tif`: ΔF/F stack (time × height × width, see Methods of the paper), 72 frames (8 s at 9 Hz) per stimulation pattern, patterns concatenated in time
+- `<name>_dff.tif`: ΔF/F stack (time × height × width), 72 frames (8 s at 9 Hz) per stimulation pattern, patterns concatenated in time
+
+The extracted cell data are cached as `cell_data_<name>` in the same directory; if that file is present, it is loaded instead of the two files above.
 
 ## Usage
 
@@ -51,8 +52,8 @@ python neuron_activity_processing.py
 
 ## Citation
 
-If you use this code, please cite the paper above. The version of the code used in the paper is archived on Zenodo: https://doi.org/10.5281/zenodo.23889569
+If you use this code or the data, please cite the paper above.
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+The code is released under the MIT license, see [LICENSE](LICENSE). The license of the data is given in the Zenodo record.
